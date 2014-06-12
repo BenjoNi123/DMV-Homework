@@ -144,7 +144,23 @@ namespace DMV_GUI
             {                                                                         //cast                    //cast
                 mv = new Truck(textBoxVIN.Text, ComboBoxMake.Text, textBoxModel.Text, (int)NoOfWheels.Value, (int)NoOfSeats.Value, dateTimePicker1.Value, Convert.ToDouble(textBox1.Text));
             }
-
+            if (radioButtonTruck.Checked)
+            {
+                mv = new Truck(textBoxVIN.Text, ComboBoxMake.Text, textBoxModel.Text, (int)NoOfWheels.Value, (int)NoOfSeats.Value, dateTimePicker1.Value, Convert.ToDouble(textBox1.Text));
+            }
+            else if (radioButtonBus.Checked)
+            {
+                mv = new Bus(textBoxVIN.Text, ComboBoxMake.Text, textBoxModel.Text, (int)NoOfWheels.Value, (int)NoOfSeats.Value, dateTimePicker1.Value, textBox1.Text);
+            }
+            else if (radioButtonCar.Checked)
+            {
+                mv = new Car(textBoxVIN.Text, ComboBoxMake.Text, textBoxModel.Text, (int)NoOfWheels.Value, (int)NoOfSeats.Value, dateTimePicker1.Value, textBox1.Text, radioButtonYes.Checked, Convert.ToInt32(textBox2.Text));
+            }
+            else if (radioButtonTaxi.Checked)
+            {
+                mv = new Taxi(textBoxVIN.Text, ComboBoxMake.Text, textBoxModel.Text, (int)NoOfWheels.Value, (int)NoOfSeats.Value, dateTimePicker1.Value, textBox1.Text, radioButtonYes.Checked, Convert.ToInt32(textBox2.Text), radioButtonNo.Checked);
+            }
+            
             richTextBox1.Text = mv.show();
             FileStream file = new FileStream(fileName, FileMode.Append, FileAccess.Write);
             StreamWriter writer = new StreamWriter(file);
@@ -156,13 +172,13 @@ namespace DMV_GUI
             {
                 File.Create("RegisteredVehicles.txt").Close();
             }
-            if (!Directory.Exists("C:\\DVM\\BACKUP"))
+            if (!Directory.Exists("C:\\DMV\\BACKUP"))
             {
-                Directory.CreateDirectory("C:\\DVM\\BACKUP");
+                Directory.CreateDirectory("C:\\DMV\\BACKUP");
             }
-            File.Move("RegisteredVehicles.txt", "C:\\DVM\\Backup\\RegisteredVehicles.txt");
-            String name = "C:\\DVM\\Backup\\RegisteredVehicles" + DateTime.Now.ToString("HH-mm-ss dd-MM-yyyy") + ".txt";
-            File.Move("C:\\DVM\\Backup\\RegisteredVehicles.txt", name);
+            File.Move("RegisteredVehicles.txt", "C:\\DMV\\Backup\\RegisteredVehicles.txt");
+            String name = "C:\\DMV\\Backup\\RegisteredVehicles" + DateTime.Now.ToString("HH-mm-ss dd-MM-yyyy") + ".txt";
+            File.Move("C:\\DMV\\Backup\\RegisteredVehicles.txt", name);
             file = new FileStream(name, FileMode.Append, FileAccess.Write);
             writer = new StreamWriter(file);
             StringBuilder sb = new StringBuilder();
@@ -190,7 +206,7 @@ namespace DMV_GUI
             }
             catch (Exception)
             {
-                MessageBox.Show("There is no file "+lastFileName+" in C:\\DVM\\Backup");
+                MessageBox.Show("There is no file "+lastFileName+" in C:\\DMV\\Backup");
             }
         }
 
